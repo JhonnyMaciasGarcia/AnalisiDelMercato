@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Recupero & Ricondizionamento – Milano</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f4f3ef;
+      --bg-tertiary: #eeedea;
+      --text-primary: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-tertiary: #888780;
+      --border-light: rgba(0,0,0,0.1);
+      --border-mid: rgba(0,0,0,0.18);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --bg-tertiary: #242422;
+        --text-primary: #f0efe8;
+        --text-secondary: #b4b2a9;
+        --text-tertiary: #888780;
+        --border-light: rgba(255,255,255,0.1);
+        --border-mid: rgba(255,255,255,0.18);
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 780px; margin: 0 auto; }
+    .section { margin-bottom: 2.5rem; }
+    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px; }
+    .section-title { font-size: 18px; font-weight: 500; color: var(--text-primary); margin: 0 0 1rem; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+    .metric-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 1rem; }
+    .metric-label { font-size: 12px; color: var(--text-secondary); margin: 0 0 4px; }
+    .metric-value { font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 0; }
+    .metric-sub { font-size: 11px; color: var(--text-tertiary); margin: 2px 0 0; }
+    .divider { border: none; border-top: 0.5px solid var(--border-light); margin: 2rem 0; }
+    .hero { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem; }
+    .hero-title { font-size: 22px; font-weight: 500; color: var(--text-primary); margin: 0 0 4px; }
+    .hero-sub { font-size: 14px; color: var(--text-secondary); margin: 0 0 1rem; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { font-size: 12px; padding: 3px 10px; border-radius: var(--radius-md); border: 0.5px solid var(--border-light); color: var(--text-secondary); }
+    .badge-green { background: #EAF3DE; color: #3B6D11; border-color: #C0DD97; }
+    .badge-blue { background: #E6F1FB; color: #185FA5; border-color: #B5D4F4; }
+    .badge-amber { background: #FAEEDA; color: #854F0B; border-color: #FAC775; }
+    .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .pillar { background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-lg); padding: 1rem 1.25rem; }
+    .pillar-name { font-size: 13px; font-weight: 500; color: var(--text-primary); margin: 0 0 4px; }
+    .pillar-desc { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 500px) { .two-col { grid-template-columns: 1fr; } }
+    .year-tabs { display: flex; gap: 6px; margin-bottom: 1rem; }
+    .tab-btn { font-size: 13px; padding: 5px 14px; border-radius: var(--radius-md); border: 0.5px solid var(--border-mid); background: transparent; color: var(--text-secondary); cursor: pointer; }
+    .tab-btn.active { background: var(--bg-secondary); color: var(--text-primary); border-color: rgba(0,0,0,0.3); }
+    .price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .price-table th { text-align: left; font-weight: 500; font-size: 12px; color: var(--text-secondary); padding: 6px 10px; border-bottom: 0.5px solid var(--border-light); }
+    .price-table td { padding: 8px 10px; border-bottom: 0.5px solid var(--border-light); color: var(--text-primary); }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:hover td { background: var(--bg-secondary); }
+    .num { font-variant-numeric: tabular-nums; }
+    .empty-cell { color: var(--text-tertiary); font-size: 11px; }
+    .chart-wrap { position: relative; width: 100%; height: 240px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; font-size: 12px; color: var(--text-secondary); }
+    .legend span { display: flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .table-wrapper { overflow-x: auto; background: var(--bg-primary); border: 0.5px solid var(--border-light); border-radius: var(--radius-lg); }
+    .year-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+    .y1 { background: #EAF3DE; color: #3B6D11; }
+    .y2 { background: #E6F1FB; color: #185FA5; }
+    .y3 { background: #EEEDFE; color: #3C3489; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <p class="hero-title">IT Recupero & Ricondizionamento</p>
+    <p class="hero-sub">Modello business integrato — Milano e Provincia</p>
+    <div class="badge-row">
+      <span class="badge badge-green">Ritiro hardware</span>
+      <span class="badge badge-green">Rigenerazione</span>
+      <span class="badge badge-blue">Rivendita a enti</span>
+      <span class="badge badge-amber">Abbonamento assistenza</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Risultati attesi</p>
+    <p class="section-title">Fatturato totale</p>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <p class="metric-label">Anno 1</p>
+        <p class="metric-value">329 K€</p>
+        <p class="metric-sub">10–14 clienti attivi</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Anno 2</p>
+        <p class="metric-value">849 K€</p>
+        <p class="metric-sub">25–35 clienti attivi</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Anno 3</p>
+        <p class="metric-value">1,641 K€</p>
+        <p class="metric-sub">45–65 clienti attivi</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Device gestiti</p>
+        <p class="metric-value">6.000+</p>
+        <p class="metric-sub">cumulati 3 anni</p>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#378ADD;"></span>Hardware</span>
+      <span><span class="legend-dot" style="background:#1D9E75;"></span>Assistenza</span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="revenueChart" role="img" aria-label="Grafico a barre del fatturato hardware e assistenza nei 3 anni">Anno 1: 279K hardware, 50K assistenza. Anno 2: 654K hardware, 195K assistenza. Anno 3: 1211K hardware, 430K assistenza.</canvas>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">Prezzi di vendita</p>
+    <p class="section-title">Hardware per anno e segmento</p>
+    <div class="year-tabs" id="hw-tabs">
+      <button class="tab-btn active" data-year="1">Anno 1</button>
+      <button class="tab-btn" data-year="2">Anno 2</button>
+      <button class="tab-btn" data-year="3">Anno 3</button>
+    </div>
+    <div class="table-wrapper" id="hw-table-wrap"></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">Ricavi ricorrenti</p>
+    <p class="section-title">Abbonamento assistenza per anno e segmento</p>
+    <div class="year-tabs" id="sub-tabs">
+      <button class="tab-btn active" data-year="1">Anno 1</button>
+      <button class="tab-btn" data-year="2">Anno 2</button>
+      <button class="tab-btn" data-year="3">Anno 3</button>
+    </div>
+    <div class="table-wrapper" id="sub-table-wrap"></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">Ricavi dettagliati</p>
+    <p class="section-title">Hardware vs assistenza per anno</p>
+    <div class="table-wrapper">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Anno</th>
+            <th>Device venduti</th>
+            <th>Hardware</th>
+            <th>Assistenza</th>
+            <th>Totale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="year-badge y1">Anno 1</span></td>
+            <td class="num">1.000</td>
+            <td class="num">279.000 €</td>
+            <td class="num">50.000 €</td>
+            <td class="num" style="font-weight:500;">329.000 €</td>
+          </tr>
+          <tr>
+            <td><span class="year-badge y2">Anno 2</span></td>
+            <td class="num">2.400</td>
+            <td class="num">654.000 €</td>
+            <td class="num">195.000 €</td>
+            <td class="num" style="font-weight:500;">849.000 €</td>
+          </tr>
+          <tr>
+            <td><span class="year-badge y3">Anno 3</span></td>
+            <td class="num">4.200</td>
+            <td class="num">1.211.000 €</td>
+            <td class="num">430.000 €</td>
+            <td class="num" style="font-weight:500;">1.641.000 €</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">Analisi di mercato</p>
+    <p class="section-title">Struttura del mercato</p>
+    <div class="two-col" style="margin-bottom:1rem;">
+      <div class="pillar">
+        <p class="pillar-name">Lato offerta</p>
+        <p class="pillar-desc">Frammentato — circa 190–400 operatori tra ITAD, ricondizionatori e smaltitori evoluti. Poche aziende strutturate.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">Lato domanda</p>
+        <p class="pillar-desc">Ampio — oltre 5M–12M € annui di potenziale nel segmento pubblico e sociale. Non saturo.</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="pillar">
+        <p class="pillar-name">Ciclo rinnovo aziende</p>
+        <p class="pillar-desc">PC e dispositivi: 3–4 anni. Server: 4–6 anni. Flusso costante di hardware ancora utilizzabile.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">Domanda pubblica</p>
+        <p class="pillar-desc">Scuole, ospedali e no profit: budget IT limitati ma ricorrenti, orientati a soluzioni a basso costo e sostenibili.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <p class="section-label">Conclusioni strategiche</p>
+    <p class="section-title">I tre pilastri del modello</p>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <p class="pillar-name">Supply stabile</p>
+        <p class="pillar-desc">Le aziende dismettono hardware in modo ciclico e prevedibile, garantendo un flusso continuo di prodotto.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">Domanda pubblica costante</p>
+        <p class="pillar-desc">Scuole, ospedali e no profit rappresentano un mercato stabile con budget limitati ma ricorrenti.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-name">Ricavi ricorrenti</p>
+        <p class="pillar-desc">L'abbonamento di assistenza trasforma il modello da rivendita a servizio continuativo.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const hwData = {
+  1: [['PC','270','—','310'],['Server','—','—','—'],['Stampanti','170','—','195'],['Mobile','—','—','—']],
+  2: [['PC','270','300','310'],['Server','800','—','—'],['Stampanti','170','180','195'],['Mobile','200','—','—']],
+  3: [['PC','250','300','290'],['Server','750','1.100','—'],['Stampanti','160','170','180'],['Mobile','200','250','—']],
+};
+const subData = {
+  1: [['PC','45','—','60'],['Server','150','—','—'],['Stampanti','40','—','50'],['Mobile','30','—','—']],
+  2: [['PC','50','90','65'],['Server','180','400','—'],['Stampanti','45','80','55'],['Mobile','35','60','—']],
+  3: [['PC','55','100','70'],['Server','200','450','250'],['Stampanti','50','85','60'],['Mobile','40','70','45']],
+};
+function buildTable(data, year, containerId) {
+  const rows = data[year];
+  const labels = ['Scuole (€)', 'Ospedali (€)', 'No Profit (€)'];
+  let html = '<table class="price-table" style="padding:0.5rem;"><thead><tr><th>Device</th>';
+  labels.forEach(l => html += `<th>${l}</th>`);
+  html += '</tr></thead><tbody>';
+  rows.forEach(([device, ...vals]) => {
+    html += `<tr><td style="font-weight:500;padding:8px 10px;">${device}</td>`;
+    vals.forEach(v => {
+      if (v === '—') html += `<td class="empty-cell" style="padding:8px 10px;">—</td>`;
+      else html += `<td class="num" style="padding:8px 10px;">${v} €</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById(containerId).innerHTML = html;
+}
+function setupTabs(tabsId, tableId, data) {
+  buildTable(data, 1, tableId);
+  document.getElementById(tabsId).addEventListener('click', e => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    document.querySelectorAll(`#${tabsId} .tab-btn`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    buildTable(data, parseInt(btn.dataset.year), tableId);
+  });
+}
+setupTabs('hw-tabs', 'hw-table-wrap', hwData);
+setupTabs('sub-tabs', 'sub-table-wrap', subData);
+
+new Chart(document.getElementById('revenueChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Anno 1', 'Anno 2', 'Anno 3'],
+    datasets: [
+      { label: 'Hardware', data: [279000, 654000, 1211000], backgroundColor: '#378ADD', borderRadius: 4 },
+      { label: 'Assistenza', data: [50000, 195000, 430000], backgroundColor: '#1D9E75', borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('it-IT') + ' €' } }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { color: '#888780', font: { size: 12 } } },
+      y: { stacked: true, grid: { color: 'rgba(136,135,128,0.15)' }, ticks: { color: '#888780', font: { size: 11 }, callback: v => (v >= 1000000 ? (v/1000000).toFixed(1)+'M' : (v/1000).toFixed(0)+'K') + ' €' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
